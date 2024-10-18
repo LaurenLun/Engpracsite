@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" 
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        {% comment %} <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+        crossorigin="anonymous"></script> {% endcomment %}
+        <style>
+            .navbar-nav .nav-item {
+                margin-left: 15px;
+            }
+            .card {
+                box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+            }
+            .list-group-item {
+                background-color: #f8f9fa;
+            }
+            .btn-primary {
+                transition: all 0.3s ease;
+            }
+            .btn-primary:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+            }
+            .form-group {
+                margin-bottom: 1rem;
+            }
+            .form-group label {
+                display: block;
+                margin-bottom: .5rem;
+            }
+            .form-group input {
+                width: 100%;
+                padding: .375rem .75rem;
+                font-size: 1rem;
+                line-height: 1.5;
+                border: 1px solid #ced4da;
+                border-radius: .25rem;
+            }
+            .form-check {
+                padding-left: 1.25rem;
+            }
+            .form-check-input {
+                position: absolute;
+                margin-top: .3rem;
+                margin-left: -1.25rem;
+            }
+            .form-check-label {
+                margin-bottom: 0;
+            }
+            .alert-success {
+                background-color: #d4edda;
+                border-color: #c3e6cb;
+                color: #155724;
+            }
+        </style>
+    </head>
+    <body>
+        <form action="" method="POST">{% csrf_token %}
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="navbar-nav w-100 justify-content-end">
+                    <a class="navbar-brand" href="{% url 'accounts:home' %}">ホーム画面</a>
+                    <a class="navbar-brand" href="{% url 'boards:list_themes' %}">掲示板一覧</a>
+                {% if user.is_authenticated %}
+                    <div class="top-links">
+                    <a class="navbar-brand" href="{% url 'accounts:us_logout' %}">ログアウト</a>
+                    <a class="navbar-brand" href="{% url 'accounts:us_info' %}">ユーザー情報</a>
+                {% else %}
+                    <div class="top-links">
+                    <a class="navbar-brand" href="{% url 'accounts:us_login' %}">ログイン</a>
+                    <a class="navbar-brand" href="{% url 'accounts:us_regist' %}">新規ユーザー登録</a>
+                {% endif %}
+            </nav>
+        </form>
+        
+        {% comment %} <div class="container mt-3">
+            <div id="message-container">
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }} alert-dismissible fade show"  role="alert">
+                            {{ message }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    {% endfor %}
+                {% endif %} 
+            </div>
+        </div> {% endcomment %}
+
+        {% block content %}{% endblock %}
+        {% block javascript %}{% endblock %}
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        
+        <script>
+        $(document).ready(function() {
+            function handleAlerts() {
+                $('.alert').each(function() {
+                    var $alert = $(this);
+                    setTimeout(function() {
+                        $alert.fadeOut('slow', function() {
+                            $(this).remove();
+                        });
+                    }, 5000);
+                });
+            }
+
+            // 處理頁面加載時的警告
+            handleAlerts();
+
+            // 處理動態插入的警告
+            var observer = new MutationObserver(function(mutations) {
+                mutations.forEach(function(mutation) {
+                    if (mutation.type === 'childList' && mutation.target.id === 'message-container') {
+                        handleAlerts();
+                    }
+                });
+            });
+
+            var config = { childList: true, subtree: true };
+            observer.observe(document.getElementById('message-container'), config);
+        });
+        </script>
+    </body>
+</html>

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow-sm">
+        <div class="card-header bg-white">
+            <h3 class="mb-0 text-center">掲示板削除画面</h3>
+        </div>
+        <div class="card-body">
+            <p class="text-center">本当に「{{ theme.title }}」を削除しますか？</p>
+            <form method="POST" class="text-center">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">掲示板削除</button>
+                <a href="{% url 'boards:list_themes' %}" class="btn btn-secondary">キャンセル</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

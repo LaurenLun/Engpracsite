@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow-sm">
+        <div class="card-header bg-white">
+            <h3 class="mb-0 text-center">掲示板作成画面</h3>
+        </div>
+        <div class="card-body">
+            <div class="alert alert-warning alert-persistent text-center" role="alert">
+                掲示板を作成するにはログインしてください。
+                <a href="{% url 'accounts:us_login' %}?next={{ request.path|urlencode }}" class="alert-link">ログイン</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // 禁用任何可能導致警告消失的JavaScript
+    document.addEventListener('DOMContentLoaded', function() {
+        var alerts = document.getElementsByClassName('alert');
+        for (var i = 0; i < alerts.length; i++) {
+            alerts[i].classList.remove('alert-dismissible');
+            var closeButton = alerts[i].querySelector('.close');
+            if (closeButton) {
+                closeButton.remove();
+            }
+        }
+    });
+</script>
+{% endblock %}

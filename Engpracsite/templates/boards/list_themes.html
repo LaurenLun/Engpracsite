@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% block content %}
+{% block messages %}
+    {% if messages %}
+        <div class="container mt-3" id="message-container">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endblock %}
+<div class="container mt-5">
+    <h3 style="text-align: center;">掲示板一覧画面</h3>
+    <div class="text-center mb-4">
+        <a href="{% url 'boards:create_theme' %}" class="btn btn-primary">掲示板を新たに作成する</a>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <table class="table table-hover">
+                <thead class="table-light">
+                    <tr>
+                        <th scope="col" class="text-center">#</th>
+                        <th scope="col" class="text-center">タイトル</th>
+                        <th scope="col" class="text-center">作成者</th>
+                        <th scope="col" class="text-center">操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for theme in themes %}
+                    <tr>
+                        <td class="text-center">{{ forloop.counter }}</td>
+                        <td class="text-center">
+                            <a href="{% url 'boards:view_comments' theme_id=theme.id %}">{{ theme.title }}</a>
+                        </td>
+                        <td class="text-center">{{ theme.user.email }}</td>
+                        <td class="text-center">
+                            {% if user.is_authenticated and user == theme.user %}
+                                <a href="{% url 'boards:delete_theme' theme_id=theme.id %}" class="btn btn-danger btn-sm">削除</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="3" class="text-center">まだ掲示板がありません。</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

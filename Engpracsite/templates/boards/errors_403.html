@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="alert alert-danger" role="alert">
+        <h4 class="alert-heading">権限がありません</h4>
+        <p>申し訳ありませんが、このページにアクセスする権限がありません。</p>
+        <hr>
+        <p class="mb-0">ホームページに戻るには <a href="{% url 'accounts:home' %}">ここをクリック</a>してください。</p>
+    </div>
+</div>
+{% endblock %}

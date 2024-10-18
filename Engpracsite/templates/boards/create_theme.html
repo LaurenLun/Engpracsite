@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow-sm">
+        <div class="card-header bg-white">
+            <h3 class="mb-0 text-center">掲示板作成画面</h3>
+        </div>
+        <div class="card-body">
+            {% if user.is_authenticated %}
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="text-center">
+                    {{ create_theme_form.as_p }}
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">掲示板作成</button>
+                        <a href="{% url 'boards:list_themes' %}" class="btn btn-secondary">戻る</a>
+                    </div>
+                </form>
+            {% else %}
+                <div class="alert alert-warning text-center" role="alert">
+                    ログインしてから掲示板を作成してください
+                    <a href="{% url 'accounts:us_login' %}?next={{ request.path }}" class="alert-link">ログイン</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

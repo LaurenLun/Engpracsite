@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card mt-5">
+                <div class="card-body">
+                    <h2 class="card-title text-center mb-4">ユーザー情報</h2>
+                    <ul class="list-group mb-4">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <strong>名前:</strong>
+                            <span>{{ user.usname }}</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <strong>メールアドレス:</strong>
+                            <span>{{ user.email }}</span>
+                        </li>
+                    </ul>
+                    <div class="text-center">
+                        <a href="{% url 'accounts:update_us_info' %}" class="btn btn-primary">登録情報変更</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

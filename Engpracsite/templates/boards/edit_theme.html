@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow-sm">
+        <div class="card-header bg-white">
+            <h3 class="mb-0 text-center">掲示板編集画面</h3>
+        </div>
+        <div class="card-body">
+            <form method="POST">
+                {% csrf_token %}
+                <div class="form-group row">
+                    <label for="id_title" class="col-sm-3 col-form-label">タイトル:</label>
+                    <div class="col-sm-9">
+                        <input type="text" name="title" id="id_title" class="form-control" value="{{ form.title.value|default_if_none:'' }}">
+                    </div>
+                </div>
+                <div class="text-center mt-4">
+                    <button type="submit" class="btn btn-primary">掲示板更新</button>
+                </div>
+            </form>
+        </div>
+        <div class="card-footer text-center bg-white">
+            <a href="{% url 'boards:delete_theme' id=id %}" class="btn btn-danger">削除する</a>
+            <a href="{% url 'boards:list_themes' %}" class="btn btn-secondary">戻る</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    body {
+        background-color: #f8f9fa;
+    }
+    .card {
+        border: none;
+        box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15);
+    }
+    .card-header {
+        border-bottom: 1px solid #e3e6f0;
+    }
+    .form-control {
+        border: 1px solid #ced4da;
+    }
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+    .btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #0056b3;
+    }
+    .btn-danger {
+        background-color: #dc3545;
+        border-color: #dc3545;
+    }
+    .btn-danger:hover {
+        background-color: #c82333;
+        border-color: #bd2130;
+    }
+</style>
+{% endblock %}

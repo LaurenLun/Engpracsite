@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow-sm">
+        <div class="card-header bg-white">
+            <h3 class="mb-0 text-center">タイトル名： {{ theme.title }}</h3>
+        </div>
+        <div class="card-body">
+            {% for comment in comments %}
+                <div class="comment-item mb-4">
+                        <div class="comment-header mb-2">
+                            <strong>名前:</strong>  {{ comment.user.usname }}
+                        </div>
+                        <div class="comment-content">
+                            <strong>コメント:</strong>
+                            <p class="comment-text"> {{ comment.comment|linebreaksbr }}</p>
+                        </div>
+                </div>
+                {% if not forloop.last %}<hr>{% endif %}
+            {% empty %}
+                <p class="text-muted text-center">まだコメントがありません。</p>
+            {% endfor %}
+        </div>
+        {% if user.is_authenticated %}
+            <div class="card-footer bg-white">
+                <form method="POST" action="{% url 'boards:post_comment' theme.id %}">
+                    {% csrf_token %}
+                    {{ post_comment_form }}
+                    <button type="submit" class="btn btn-primary">コメント送信</button>
+                    <a href="{% url 'boards:list_themes' %}" class="btn btn-secondary">戻る</a>
+                </form>
+            </div>
+        {% else %}
+            <div class="card-footer bg-white text-center">
+                <p>コメントを投稿するには<a href="{% url 'accounts:us_login' %}">ログイン</a>してください。</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    body {
+        background-color: #f8f9fa;
+    }
+    .card {
+        border: 1px solid #dee2e6;
+        box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    }
+    .card-header {
+        border-bottom: 1px solid #dee2e6;
+    }
+    .comment-item {
+        margin-bottom: 15px;
+    }
+    .row {
+        margin-bottom: 5px;
+    }
+    .form-control {
+        border: 1px solid #ced4da;
+    }
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+    .btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #0056b3;
+    }
+    .comment-text {
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        max-width: 100%;
+    }
+    .form-control {
+        max-width: 100%;
+    }
+</style>
+{% endblock %}
