@@ -27,8 +27,8 @@ SECRET_KEY = 'django-insecure-dzlgv1+vxnl5%em+g(vm7ph%4%xzaq2gj7wu2leh2w6o*7l4ri
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
-# CSRF_TRUSTED_ORIGINS = ['']
+ALLOWED_HOSTS = ['shizukulun.pythonanywhere.com', 'localhost', '127.0.0.1']
+CSRF_TRUSTED_ORIGINS = ['https://shizukulun.pythonanywhere.com/']
 
 # Application definition
 
