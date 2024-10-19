@@ -28,6 +28,9 @@ SECRET_KEY = 'django-insecure-dzlgv1+vxnl5%em+g(vm7ph%4%xzaq2gj7wu2leh2w6o*7l4ri
 DEBUG = True
 
 ALLOWED_HOSTS = ['shizukulun.pythonanywhere.com', 'localhost', '127.0.0.1']
+
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_AGE = True
 CSRF_TRUSTED_ORIGINS = ['https://shizukulun.pythonanywhere.com/']
 
 # Application definition
