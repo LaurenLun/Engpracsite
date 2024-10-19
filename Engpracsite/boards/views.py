@@ -36,7 +36,7 @@ def create_theme(request):
     
     
 def list_themes(request):
-    themes = Themes.objects.fetch_all_themes()
+    themes = Themes.objects.all().order_by('-created_at')
     return render(
         request, 'boards/list_themes.html', {'themes': themes}
     )
@@ -60,16 +60,17 @@ def edit_theme(request, id):
 
 
 def custom_permission_denied_view(request, exception):
-    return render(request, 'errors_403.html', status=403)
+    return render(request, '403.html', status=403)
 
 
 @login_required
 def delete_theme(request, theme_id):
     theme = get_object_or_404(Themes, id=theme_id)
-    if theme.user != request.user:
-        raise PermissionDenied("削除権限を持ってないやで")
     
     if request.method == 'POST':
+        if theme.user != request.user:
+            raise PermissionDenied("削除権限を持ってないやで")
+
         theme.delete()
         messages.success(request, '掲示板を削除しました')
         return redirect('boards:list_themes')
@@ -80,7 +81,7 @@ def delete_theme(request, theme_id):
 
 def view_comments(request, theme_id):
     theme = get_object_or_404(Themes, id=theme_id)
-    comments = Comments.objects.fetch_by_theme_id(theme_id)
+    comments = Comments.objects.fetch_by_theme_id(theme_id).order_by('-created_at')
     
     paginator = Paginator(comments, 10)  # 每頁顯示10條評論
     page_number = request.GET.get('page')

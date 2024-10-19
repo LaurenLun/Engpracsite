@@ -13,6 +13,7 @@ class Themes(models.Model):
     user = models.ForeignKey(
         'accounts.Users', on_delete=models.CASCADE
     )
+    created_at = models.DateTimeField(auto_now_add=True)
     
     objects = ThemeManager()
     
@@ -34,8 +35,10 @@ class Comments(models.Model):
     theme = models.ForeignKey(
         'Themes', on_delete=models.CASCADE
     )
+    created_at = models.DateTimeField(auto_now_add=True)
     
     objects = CommentManager()
     
     class Meta:
         db_table = 'comments'
+        ordering = ['-created_at']

@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 import os
+from django.contrib.messages import constants as messages
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
@@ -76,6 +77,14 @@ TEMPLATES = [
 WSGI_APPLICATION = 'Engpracsite.wsgi.application'
 MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 
+MESSAGE_LEVEL = 10  # DEBUG level
+MESSAGE_TAGS = {
+    messages.DEBUG: 'alert-info',
+    messages.INFO: 'alert-info',
+    messages.SUCCESS: 'alert-success',
+    messages.WARNING: 'alert-warning',
+    messages.ERROR: 'alert-danger',
+}
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases

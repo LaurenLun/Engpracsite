@@ -1,20 +1,6 @@
 {% extends 'base.html' %}
 {% load widget_tweaks %}
 {% block content %}
-{% block messages %}
-    {% if messages %}
-        <div class="container mt-3" id="message-container">
-            {% for message in messages %}
-                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-                    {{ message }}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-            {% endfor %}
-        </div>
-    {% endif %}
-{% endblock %}
 <div class="container mt-5">
     <h3 style="text-align: center;">掲示板一覧画面</h3>
     <div class="text-center mb-4">
@@ -29,6 +15,7 @@
                         <th scope="col" class="text-center">タイトル</th>
                         <th scope="col" class="text-center">作成者</th>
                         <th scope="col" class="text-center">操作</th>
+                        <th scope="col" class="text-center">作成時間</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -40,10 +27,11 @@
                         </td>
                         <td class="text-center">{{ theme.user.email }}</td>
                         <td class="text-center">
-                            {% if user.is_authenticated and user == theme.user %}
+                            {% if user.is_authenticated %}
                                 <a href="{% url 'boards:delete_theme' theme_id=theme.id %}" class="btn btn-danger btn-sm">削除</a>
                             {% endif %}
                         </td>
+                        <td class="text-center">{{ theme.created_at|date:"Y-m-d H:i"}}</td>
                     </tr>
                     {% empty %}
                     <tr>

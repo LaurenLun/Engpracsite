@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="alert alert-danger alert-persistent" role="alert">
+        <h4 class="alert-heading">権限ないやでやで</h4>
+        <p>すみませんが、このページに削除する権限が持ってないやで。</p>
+        <hr>
+        <p class="mb-0">掲示板一覧に戻るには <a href="{% url 'boards:list_themes' %}">ここをクリック</a>してください。</p>
+    </div>
+</div>
+{% endblock %}

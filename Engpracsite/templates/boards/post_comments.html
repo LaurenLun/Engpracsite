@@ -8,13 +8,17 @@
         <div class="card-body">
             {% for comment in comments %}
                 <div class="comment-item mb-4">
-                        <div class="comment-header mb-2">
-                            <strong>名前:</strong>  {{ comment.user.usname }}
-                        </div>
-                        <div class="comment-content">
-                            <strong>コメント:</strong>
-                            <p class="comment-text"> {{ comment.comment|linebreaksbr }}</p>
-                        </div>
+                    <div class="comment-header mb-2">
+                        <strong style="font-size: 16px;">名前:</strong>  
+                        <span style="font-size: 16px;">{{ comment.user.usname }}<span>
+                    </div>
+                    <div class="comment-content">
+                        <strong style="font-size: 16px;">コメント:</strong>
+                        <p class="comment-text" style="font-size: 16px;"> {{ comment.comment|linebreaksbr }}</p>
+                    </div>
+                    <div class="comment-meta">
+                        <small style="font-size: 14px;" class="text-muted">作成時間：{{ comment.created_at|date:"Y-m-d H:i" }}</small>
+                    </div>
                 </div>
                 {% if not forloop.last %}<hr>{% endif %}
             {% empty %}
@@ -53,6 +57,7 @@
     }
     .comment-item {
         margin-bottom: 15px;
+        font-size: 16px;
     }
     .row {
         margin-bottom: 5px;
@@ -75,6 +80,10 @@
     }
     .form-control {
         max-width: 100%;
+    }
+    .comment-meta {
+        font-size: 14px;
+        color: #666;
     }
 </style>
 {% endblock %}

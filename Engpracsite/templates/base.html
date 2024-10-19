@@ -76,22 +76,21 @@
             </nav>
         </form>
         
-        {% comment %} <div class="container mt-3">
+        <div class="container mt-3">
             <div id="message-container">
                 {% if messages %}
                     {% for message in messages %}
-                        <div class="alert alert-{{ message.tags }} alert-dismissible fade show"  role="alert">
+                        <div class="alert {{ message.tags }} alert-dismissible fade show" role="alert">
                             {{ message }}
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                {% comment %} <span aria-hidden="true">&times;</span> {% endcomment %}                            
                         </div>
                     {% endfor %}
                 {% endif %} 
             </div>
-        </div> {% endcomment %}
-
+        </div>
         {% block content %}{% endblock %}
+        
         {% block javascript %}{% endblock %}
         <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
@@ -102,11 +101,13 @@
             function handleAlerts() {
                 $('.alert').each(function() {
                     var $alert = $(this);
-                    setTimeout(function() {
-                        $alert.fadeOut('slow', function() {
-                            $(this).remove();
-                        });
-                    }, 5000);
+                    if (!$alert.hasClass('alert-persistent')) {
+                        setTimeout(function() {
+                            $alert.fadeOut('slow', function() {
+                                $(this).remove();
+                            });
+                        }, 5000);                
+                    }
                 });
             }
 

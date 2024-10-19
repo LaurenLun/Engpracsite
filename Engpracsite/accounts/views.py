@@ -43,44 +43,28 @@ class UserLoginView(LoginView):
     authentication_form = UserLoginForm
     
     def form_valid(self, form):
-        # email = form.cleaned_data.get('username')
-        # password = form.cleaned_data.get('password')
-        # remember = form.cleaned_data.get('remember')
-        # user = authenticate(self.request, email=email, password=password)
         response = super().form_valid(form)
+        remember = form.cleaned_data.get('remember')
         messages.success(self.request, "ログインに成功しました。")
-        print("Message added:", list(messages.get_messages(self.request)))
+        
+        if remember:
+            # 如果用戶選擇了"記住我"，將會話設置為更長的過期時間
+            self.request.session.set_expiry(1209600)  # 2週
+        else:
+            # 否則使用默認的會話過期時間
+            self.request.session.set_expiry(0)
+        
         return response
-        
-        # if remember:
-        #     # 如果用戶選擇了"記住我"，將會話設置為更長的過期時間
-        #     self.request.session.set_expiry(1209600)  # 2週
-        # else:
-        #     # 否則使用默認的會話過期時間
-        #     self.request.session.set_expiry(0)
-        
-        # if user is not None and user.is_active:
-        #     login(self.request, user)
-        #     messages.success(self.request, "ログインに成功しました。")
-        #     print(f"User {user.email} logged in successfully")
-        #     return super().form_valid(form)
-        # elif user is not None and not user.is_active:
-        #     messages.error(self.request, 'アカウントがアクティブではありません。')
-        #     print(f"User {user.email} is not active")
-        #     return self.form_invalid(form)
-        # else:
-        #     messages.error(self.request, 'ログインに失敗しました。メールアドレスとパスワードを確認してください。')
-        #     print("Authentication failed")
-        #     return self.form_invalid(form)
+    
+        # return redirect('accounts:home') 
         
     def form_invalid(self, form):
-        messages.error(self.request, "ログインに失敗しました。メールアドレスとパスワードを確認してください。")
+        messages.error(self.request, "メールアドレスまたはパスワードが正しくありません。")
         return super().form_invalid(form)
     
     def get_success_url(self):
         # 確保消息在重定向後仍然存在
-        # return self.get_redirect_url() or self.get_default_redirect_url()
-        return reverse_lazy('boards:list_themes')
+        return reverse_lazy('accounts:home')
   
 
 def get_context_data(self, **kwargs):
